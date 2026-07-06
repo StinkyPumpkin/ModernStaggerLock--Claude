@@ -1,0 +1,15 @@
+{
+  "name": "modernstaggerlock",
+  "version-string": "1.1.7",
+  "description": "Modern Stagger Lock (Claude fork: magnitude floor + SexLab-scene guard)",
+  "license": "MIT",
+  "builtin-baseline": "099fb9250d916511782bf5215f01f2e7141beb3a",
+  "dependencies": [
+    "directxtk",
+    "rapidcsv",
+    "spdlog",
+    "xbyak",
+    "nlohmann-json",
+    "simpleini"
+  ]
+}
