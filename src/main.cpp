@@ -7,6 +7,10 @@ DLLEXPORT constinit auto SKSEPlugin_Version = []() noexcept {
 	data.PluginName(Plugin::NAME);
 	data.AuthorName(Plugin::AUTHOR);
 	data.UsesAddressLibrary();
+	// v3.7.0 split the old UsesAddressLibrary(true): must ALSO declare struct
+	// compatibility or SKSE rejects the plugin as incompatible on AE (1.6.629+).
+	// Matches the upstream binary (versionIndependenceEx = NoStructUse).
+	data.UsesNoStructs();
 
 	return data;
 }();
