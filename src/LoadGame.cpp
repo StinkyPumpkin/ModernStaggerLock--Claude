@@ -10,13 +10,19 @@ namespace ModernStaggerLock
 	void EventCallback(SKSE::MessagingInterface::Message* msg)
 	{
 		if (msg->type == SKSE::MessagingInterface::kPostLoad) {
-			ActorUpdateHook::CharacterEx::InstallHook();
-			ActorUpdateHook::PlayerEx::InstallHook();
-
-			PerformLandActionHook_NPC::InstallHook();
-			PerformLandActionHook_PC::InstallHook();
-
-			AnimEventHook::InstallHook();
+			// Claude fork: the user's known-good binary (v1.0.7.0) installed only
+			// StaggeredStateCheck + NotifyAnimationGraph + DisableStaggerJump. These
+			// three newer hooks are NOT in that build and crash on AE 1.6.1170:
+			// PerformLandActionHook patches executable code via write_call<5> at
+			// REL::ID(36507)+0x89D / REL::ID(41271)+0x241 — offsets derived from SE
+			// 1.5.97, which land mid-instruction on AE and corrupt the engine's
+			// land-action code (CTD on the movement/anim job thread). ActorUpdate +
+			// AnimEvent are dropped alongside to exactly reproduce the proven hook set.
+			// ActorUpdateHook::CharacterEx::InstallHook();
+			// ActorUpdateHook::PlayerEx::InstallHook();
+			// PerformLandActionHook_NPC::InstallHook();
+			// PerformLandActionHook_PC::InstallHook();
+			// AnimEventHook::InstallHook();
 
 			StaggeredStateCheckPatch::Install();
 
